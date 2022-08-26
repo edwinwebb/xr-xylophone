@@ -1,4 +1,4 @@
-import { OrbitControls } from '@react-three/drei';
+import { Cylinder, OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber'
 import { Debug, Physics } from '@react-three/rapier';
 import Xylophone from "./Xylophone";
@@ -10,10 +10,11 @@ function App() {
       <ambientLight intensity={0.5} />
       <Physics>
         <Debug />
-        <Xylophone />
-        <Mallet position={[1,0,0]} />
-        <Mallet position={[-1,0,0]} />
+        <Xylophone position={[0,.7,0]} />
+        <Mallet position={[-.32,.71,.05]} />
+        <Mallet position={[.32,.71,.05]} />
       </Physics>
+      <Cylinder args={[.45,.6,.7,64]} position={[0,.35,0]} />
       <OrbitControls />
     </Canvas>
   );
