@@ -1,12 +1,13 @@
+import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber'
+import { Model }  from "./xylophone";
 
 function App() {
   return (
     <Canvas>
-      <mesh position={[0,0,-5]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[4, 0.5, 16, 32]} />
-        <meshBasicMaterial wireframe color="green" />
-      </mesh>
+      <ambientLight intensity={0.5} />
+      <Model />
+      <OrbitControls />
     </Canvas>
   );
 }
