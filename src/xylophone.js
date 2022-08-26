@@ -25,7 +25,9 @@ export default function Model({ ...props }) {
       <RigidBody
         type="fixed"
         colliders="cuboid"
-        onCollide={playC}
+        onCollisionEnter={()=>{
+          playC()
+        }}
       >
         <mesh onClick={playC} geometry={nodes.C.geometry} material={materials['Material.002']} />
       </RigidBody>
