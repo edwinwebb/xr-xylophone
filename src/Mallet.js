@@ -13,29 +13,30 @@ export default function Model({ ...props }) {
   const group = useRef()
   const { nodes, materials } = useGLTF('/mallet.gltf')
   const malletAPI = useRef(null)
-  const controller = useController('right')
+  const controller = useController(props.hand)
 
   useFrame(()=>{
     if (controller) {
-      malletAPI.current.setTranslation(new Vector3(
-        controller.controller.position.x,
-        controller.controller.position.y,
-        controller.controller.position.z
-      ))
-      malletAPI.current.setRotation(new Vector3(
-        controller.controller.rotation.x,
-        controller.controller.rotation.y,
-        controller.controller.rotation.z
-      ))
+      malletAPI.current.setNextKinematicTranslation({
+        x: controller.controller.position.x,
+        y: controller.controller.position.y,
+        z: controller.controller.position.z
+      })  ;
+      malletAPI.current.setNextKinematicRotation({
+        x: controller.controller.rotation.x,
+        y: controller.controller.rotation.y,
+        z: controller.controller.rotation.z
+      }) 
     }
   })
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <RigidBody type="fixed" colliders="trimesh" ref={malletAPI}
-        onCollisionEnter={()=>{
-          console.log('mallet collision')
-        }}
+      <RigidBody 
+        type="kinematicPosition" 
+        colliders="hull" 
+        ref={malletAPI}
+        ccd={true}
       >
         <mesh geometry={nodes.xylophone4.geometry} material={materials.xylophone} />
       </RigidBody>

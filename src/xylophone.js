@@ -21,62 +21,89 @@ export default function Model({ ...props }) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <mesh geometry={nodes.frame.geometry} material={materials.Material} />
+      <RigidBody 
+        type="fixed" 
+        colliders="hull"
+      >
+        <mesh geometry={nodes.frame.geometry} material={materials.Material} />
+      </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollisionEnter={()=>{
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
           playC()
         }}
       >
         <mesh onClick={playC} geometry={nodes.C.geometry} material={materials['Material.002']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playD}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playD()
+        }}
       >
         <mesh onClick={playD} geometry={nodes.D.geometry} material={materials['Material.003']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playE}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playE()
+        }}
       >
         <mesh onClick={playE} geometry={nodes.E.geometry} material={materials['Material.004']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playF}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playF()
+        }}
       >
         <mesh onClick={playF} geometry={nodes.F.geometry} material={materials['Material.005']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playG}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playG()
+        }}
       >
         <mesh onClick={playG} geometry={nodes.G.geometry} material={materials['Material.006']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playA}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playA()
+        }}
       >
         <mesh onClick={playA} geometry={nodes.A.geometry} material={materials['Material.007']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
         colliders="cuboid"
-        onCollide={playB}
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
+        onCollisionEnter={({manifold}) => {
+          playB()
+        }}
       >
         <mesh onClick={playB} geometry={nodes.B.geometry} material={materials['Material.008']} />
       </RigidBody>
       <RigidBody
-        type="fixed"
+        enabledTranslations={[false, true, false]}
+        enabledRotations={[false, false, false]}
         colliders="cuboid"
-        onCollide={playC2}
+        onCollisionEnter={({manifold}) => {
+          playC2()
+        }}
       >
         <mesh onClick={playC2} geometry={nodes.C2.geometry} material={materials['Material.001']} />
       </RigidBody>

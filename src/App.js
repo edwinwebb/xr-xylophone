@@ -1,11 +1,10 @@
-import { Box, Cylinder, OrbitControls, Plane } from '@react-three/drei';
+import { Box, Cylinder, OrbitControls, Plane, Sphere } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Debug, Physics, CuboidCollider, RigidBody } from '@react-three/rapier';
 import Xylophone from "./Xylophone";
 import Mallet from './Mallet'
 import { useController, XR, Controllers, VRButton } from '@react-three/xr';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 
 function App() {
   return (<>
@@ -16,9 +15,10 @@ function App() {
         <Physics>
           <Debug />
           <Xylophone position={[0,.5,0]} />
-          {/* <LeftMallet position={[-.32,.71,.05]} /> */}
-          <Mallet position={[.32,.5,.05]} />
+          <Mallet hand="right" position={[-.32,.71,.05]} />
+          <Mallet hand="left" position={[.32,.5,.05]} />
           <CuboidCollider args={[1,1]} position={[0,0,0]} scale={[10,0.1,10]} />
+          
           <RigidBody type="fixed" colliders="cuboid">
             <Box
               position={[0, -0.05, 0]}
