@@ -18,14 +18,14 @@ export default function Model({ ...props }) {
   useFrame(()=>{
     if (controller) {
       malletAPI.current.setNextKinematicTranslation({
-        x: controller.controller.position.x,
-        y: controller.controller.position.y,
-        z: controller.controller.position.z
+        x: controller.grip.position.x,
+        y: controller.grip.position.y,
+        z: controller.grip.position.z
       })  ;
       malletAPI.current.setNextKinematicRotation({
-        x: controller.controller.rotation.x,
-        y: controller.controller.rotation.y,
-        z: controller.controller.rotation.z
+        x: controller.grip.rotation.x,
+        y: controller.grip.rotation.y,
+        z: controller.grip.rotation.z
       }) 
     }
   })
@@ -38,7 +38,7 @@ export default function Model({ ...props }) {
         ref={malletAPI}
         ccd={true}
       >
-        <mesh geometry={nodes.xylophone4.geometry} material={materials.xylophone} />
+        <mesh geometry={nodes.xylophone4.geometry} material={materials.xylophone} castShadow />
       </RigidBody>
     </group>
   )
