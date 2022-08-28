@@ -7,6 +7,21 @@ import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 import { useSound } from 'use-sound'
 
+const MusicalMesh = ({ onInteract, geometry, material }) => {
+  return(<RigidBody
+    colliders="cuboid"
+    enabledTranslations={[false, true, false]}
+    enabledRotations={[false, false, false]}
+    onCollisionEnter={({manifold}) => {
+      onInteract()
+    }}
+  >
+    <mesh onClick={()=> onInteract()} geometry={geometry} material={material} castShadow />
+  </RigidBody>
+
+  )
+}
+
 export default function Model({ ...props }) {
   const group = useRef()
   const { nodes, materials } = useGLTF('/xylophone.gltf')
@@ -21,65 +36,42 @@ export default function Model({ ...props }) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <mesh geometry={nodes.frame.geometry} material={materials.Material} />
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollisionEnter={()=>{
-          playC()
-        }}
-      >
-        <mesh onClick={playC} geometry={nodes.C.geometry} material={materials['Material.002']} />
+      <RigidBody type='fixed'>
+
+        <mesh geometry={nodes.frame.geometry} material={materials.Material} castShadow />
       </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playD}
-      >
-        <mesh onClick={playD} geometry={nodes.D.geometry} material={materials['Material.003']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playE}
-      >
-        <mesh onClick={playE} geometry={nodes.E.geometry} material={materials['Material.004']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playF}
-      >
-        <mesh onClick={playF} geometry={nodes.F.geometry} material={materials['Material.005']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playG}
-      >
-        <mesh onClick={playG} geometry={nodes.G.geometry} material={materials['Material.006']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playA}
-      >
-        <mesh onClick={playA} geometry={nodes.A.geometry} material={materials['Material.007']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playB}
-      >
-        <mesh onClick={playB} geometry={nodes.B.geometry} material={materials['Material.008']} />
-      </RigidBody>
-      <RigidBody
-        type="fixed"
-        colliders="cuboid"
-        onCollide={playC2}
-      >
-        <mesh onClick={playC2} geometry={nodes.C2.geometry} material={materials['Material.001']} />
-      </RigidBody>
+      <MusicalMesh
+        onInteract={playC} 
+        geometry={nodes.C.geometry} 
+        material={materials['Material.002']} />
+      <MusicalMesh
+        onInteract={playD} 
+        geometry={nodes.D.geometry} 
+        material={materials['Material.003']} />
+      <MusicalMesh
+        onInteract={playE} 
+        geometry={nodes.E.geometry} 
+        material={materials['Material.004']} />
+      <MusicalMesh
+        onInteract={playF} 
+        geometry={nodes.F.geometry} 
+        material={materials['Material.005']} />
+      <MusicalMesh
+        onInteract={playG} 
+        geometry={nodes.G.geometry} 
+        material={materials['Material.006']} />
+      <MusicalMesh
+        onInteract={playA} 
+        geometry={nodes.A.geometry} 
+        material={materials['Material.007']} />
+      <MusicalMesh
+        onInteract={playB} 
+        geometry={nodes.B.geometry} 
+        material={materials['Material.008']} />
+      <MusicalMesh
+        onInteract={playC2} 
+        geometry={nodes.C2.geometry}
+         material={materials['Material.001']} />
       <mesh geometry={nodes.Sphere.geometry} material={materials.buttons} />
       <mesh geometry={nodes.Sphere001.geometry} material={materials.buttons} />
       <mesh geometry={nodes.Sphere002.geometry} material={materials.buttons} />
@@ -90,6 +82,7 @@ export default function Model({ ...props }) {
       <mesh geometry={nodes.Sphere007.geometry} material={materials.buttons} />
     </group>
   )
+  
 }
 
 useGLTF.preload('/xylophone.gltf')

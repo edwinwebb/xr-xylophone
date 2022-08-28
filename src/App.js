@@ -1,44 +1,54 @@
-import { Box, Cylinder, OrbitControls, Plane } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Debug, Physics, CuboidCollider, RigidBody } from '@react-three/rapier';
+import { Box, Cylinder, Environment, OrbitControls } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber'
+import { Physics, RigidBody } from '@react-three/rapier';
 import Xylophone from "./Xylophone";
 import Mallet from './Mallet'
-import { useController, XR, Controllers, VRButton } from '@react-three/xr';
-import { useEffect } from 'react';
-
+import { XR, Controllers, VRButton } from '@react-three/xr';
+import { Suspense } from 'react';
+import Music from './Music';
 
 function App() {
   return (<>
     <VRButton />
-    <Canvas>
+    <Canvas camera={{position:[0,1,1]}} shadows>
       <XR>
-        <ambientLight intensity={1} />
-        <Physics>
-          <Debug />
-          <Xylophone position={[0,.5,0]} />
-          {/* <LeftMallet position={[-.32,.71,.05]} /> */}
-          <Mallet position={[.32,.5,.05]} />
-          <CuboidCollider args={[1,1]} position={[0,0,0]} scale={[10,0.1,10]} />
+        <directionalLight
+          castShadow
+          position={[10, 10, 10]}
+          shadow-mapSize-width={1024}
+        />
+        <Environment preset="apartment" />
+        <Suspense fallback={null}>
+          <Music position={[0,1,-1]} />
+        </Suspense>
+        <Physics> 
+          <group position={[0,0,-0.5]}>
+            <Xylophone position={[0,.7,0]} />
+            <Mallet hand="right" position={[-.32,.7,.05]} />
+            <Mallet hand="left" position={[.32,.7,.05]} />
+            <RigidBody type="fixed" colliders="cuboid">
+              <Cylinder
+                args={[.45,.6,.7, 64]}
+                position={[0, 0.7/2, 0]}
+                castShadow
+                receiveShadow
+                >
+                <meshStandardMaterial color="grey" />
+              </Cylinder>
+            </RigidBody>
+          </group>
           <RigidBody type="fixed" colliders="cuboid">
             <Box
               position={[0, -0.05, 0]}
-              scale={[10, 0.1, 10]}
+              scale={[100, 0.1, 100]}
               rotation={[0, 0, 0]}
               receiveShadow
             >
               <meshStandardMaterial color="white" />
             </Box>
           </RigidBody>
-          <RigidBody type="fixed" colliders="cuboid">
-            <Box
-            position={[0, 0.25, 0]}
-            scale={[1, .5, 1]}
-            rotation={[0, 0, 0]}>
-              <meshStandardMaterial color="grey" />
-            </Box>
-          </RigidBody>
         </Physics>
-        <Controllers />
+        <Controllers hideRaysOnBlur={true} />
       </XR>
       <OrbitControls />
     </Canvas>
